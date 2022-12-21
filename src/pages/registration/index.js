@@ -1,7 +1,16 @@
 import React, { useState } from "react";
 import "../registration/registration.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { RiEyeCloseFill, RiEyeFill } from "react-icons/ri";
+import { ThreeDots } from "react-loader-spinner";
+import { getDatabase, ref, set } from "firebase/database";
+
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+  sendEmailVerification,
+} from "firebase/auth";
 
 const Registration = () => {
   const [email, setEmail] = useState("");
@@ -11,6 +20,12 @@ const Registration = () => {
   const [password, setPassword] = useState("");
   const [passwordErr, setPasswordErr] = useState("");
   const [show, setShow] = useState(false);
+  const [success, setSuccess] = useState("");
+  const [loader, setLoader] = useState(false);
+
+  const auth = getAuth();
+  let navigate = useNavigate();
+  const db = getDatabase();
 
   let handleEmail = (e) => {
     setEmail(e.target.value);
@@ -32,6 +47,7 @@ const Registration = () => {
   };
 
   let handleSubmit = () => {
+    setSuccess("");
     if (!email) {
       setEmailErr("Email is required");
     } else {
@@ -42,9 +58,9 @@ const Registration = () => {
 
     if (!name) {
       setNameErr("Full name is required");
-    }else{
-      if(name.length < 6){
-        setNameErr("Fullname must be than 6 charcter or more ")
+    } else {
+      if (name.length < 6) {
+        setNameErr("Fullname must be than 6 charcter or more ");
       }
     }
 
@@ -60,6 +76,60 @@ const Registration = () => {
       setPasswordErr("Password must contain symbolic charcter");
     } else if (!password.match(/^(?=.{8,})/)) {
       setPasswordErr("Password must contain at least 8 charcter");
+    }
+
+    if (
+      email &&
+      name &&
+      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email) &&
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,30}$/.test(
+        password
+      )
+    ) {
+      setLoader(true);
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((user) => {
+          updateProfile(auth.currentUser, {
+            displayName: name,
+            photoURL: "images/profile.webp",
+          })
+            .then(() => {
+              sendEmailVerification(auth.currentUser)
+                .then(() => {
+                  setLoader(false);
+                  setSuccess("");
+                  setSuccess(
+                    "Registration  successfully ! Please login to continue"
+                  );
+                })
+                .then(() => {
+                  set(ref(db, "users/" + user.user.uid), {
+                    name: user.user.displayName,
+                    email: user.user.email,
+                    photoURL: user.user.photoURL,
+                  });
+                })
+                .then(() => {
+                  setTimeout(() => {
+                    navigate("/login");
+                  }, 2000);
+                })
+                .catch((erro) => {
+                  console.log(erro);
+                });
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode);
+          if (errorCode.includes("auth/email-already-in-use")) {
+            setSuccess("Email is already use ! try another");
+          }
+        });
     }
   };
 
@@ -103,7 +173,7 @@ const Registration = () => {
               </p>
             )}
           </div>
-          <div className="mb-9">
+          <div className="mb-10">
             {show ? (
               <div className="relative mb-1">
                 <input
@@ -141,14 +211,35 @@ const Registration = () => {
               </p>
             )}
           </div>
+          {success && (
+            <p className="font-nunito font-normal w-[368px]  text-center px-2  mb-1 rounded-lg text-base text-[#fff] bg-red-600">
+              {success}
+            </p>
+          )}
 
-          <button
-            className="border border-[#11175D] bg-[#5F35F5] rounded-[86px] w-[368px] px-12 py-4 font-nunito font-semibold text-xl text-[#FFFFFF] "
-            type="button"
-            onClick={handleSubmit}
-          >
-            Sign up
-          </button>
+          {loader ? (
+            <div className=" w-full flex justify-center ml-[100px]">
+              <ThreeDots
+                height="100"
+                width="100"
+                radius="9"
+                color="#4fa94d"
+                ariaLabel="three-dots-loading"
+                wrapperStyle={{}}
+                wrapperClassName=""
+                visible={true}
+              />
+            </div>
+          ) : (
+            <button
+              className="border border-[#11175D] bg-[#5F35F5] rounded-[86px] w-[368px] px-12 py-4 font-nunito font-semibold text-xl text-[#FFFFFF] "
+              type="button"
+              onClick={handleSubmit}
+            >
+              Sign up
+            </button>
+          )}
+
           <div className="w-[368px] text-center mt-6">
             <p className="font-nunito font-semibold text-[13px] text-[#11175D]">
               Already have an account ?
