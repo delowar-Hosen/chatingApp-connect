@@ -15,7 +15,9 @@ import { getAuth } from "firebase/auth";
 const Mygroup = () => {
   const [groupList, setGroupList] = useState([]);
   const [groupJoinList, setGroupJoinList] = useState([]);
+  const [memberList, setMemberList] = useState([]);
   const [info, setInfo] = useState(false);
+  const [memberinfo, setMemberInfo] = useState(false);
 
   const auth = getAuth();
   const db = getDatabase();
@@ -71,6 +73,26 @@ const Mygroup = () => {
     });
   };
 
+  let handleMember = (item) => {
+    console.log(item);
+    setMemberInfo(true);
+    const memberRef = ref(db, "groupmembers/");
+    onValue(memberRef, (snapshot) => {
+      let memberArr = [];
+      snapshot.forEach((gitem) => {
+        if (item.groupid == gitem.val().groupid) {
+          memberArr.push({ ...gitem.val(), key: gitem.key });
+        }
+      });
+      setMemberList(memberArr);
+    });
+  };
+
+  let handleMemberRemove = (item) => {
+    console.log(item);
+    remove(ref(db, "groupmembers/" + item.key));
+  };
+
   return (
     <div className="mt-[45px] ml-[22px]">
       <div className="w-full shadow-2xl border rounded-[20px] py-[20px] px-[20px] h-[439px]">
@@ -124,6 +146,43 @@ const Mygroup = () => {
               </div>
             ))}
           </div>
+        ) : memberinfo ? (
+          <div>
+            <button
+              onClick={() => setMemberInfo(false)}
+              className="font-pop font-semibold mr-1 text-sm w-[50px] h-[20px] bg-[#5F35F5] text-[#fff] rounded-[5px]"
+            >
+              Back
+            </button>
+            {memberList.map((item) => (
+              <div className="flex justify-between border-b pb-[13px]">
+                <div className="flex mt-3">
+                  <picture className="rounded-full w-[52px] h-[52px]">
+                    <img
+                      className="rounded-full w-[52px] h-[52px]"
+                      src={item.senderprofilepic}
+                    />
+                  </picture>
+                  <div className="mt-[1px] pl-[5px]">
+                    <h5 className="font-pop font-semibold text-[14px] leading-[27px] text-[#000000]">
+                      {item.sendername}
+                    </h5>
+                    <p className="font-pop font-medium text-[12px] leading-[21px] text-[#4D4D4DBF]">
+                      {item.gtagline}
+                    </p>
+                  </div>
+                </div>
+                <div className="mt-8">
+                  <button
+                    onClick={() => handleMemberRemove(item)}
+                    className="font-pop font-semibold text-sm w-[80px] h-[20px] bg-red-800 text-[#fff] rounded-[5px]"
+                  >
+                    Remove
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
         ) : (
           groupList.map((item) => (
             <div className="flex justify-between border-b pb-[13px]">
@@ -151,7 +210,10 @@ const Mygroup = () => {
                   Info
                 </button>
 
-                <button className="font-pop font-semibold text-sm w-[80px] h-[20px] bg-[#5F35F5] text-[#fff] rounded-[5px]">
+                <button
+                  onClick={() => handleMember(item)}
+                  className="font-pop font-semibold text-sm w-[80px] h-[20px] bg-[#5F35F5] text-[#fff] rounded-[5px]"
+                >
                   Members
                 </button>
               </div>
