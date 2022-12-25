@@ -1,8 +1,6 @@
-import React from "react";
-import { useState } from "react";
-
+import React, { useState, useEffect } from "react";
 import { getAuth } from "firebase/auth";
-import { set, ref, push, getDatabase } from "firebase/database";
+import { set, ref, push, getDatabase, onValue } from "firebase/database";
 
 const Creategroup = () => {
   const [gName, setGname] = useState("");
@@ -10,6 +8,7 @@ const Creategroup = () => {
   const [gTag, setGTag] = useState("");
   const [gTagErr, setGTagErr] = useState("");
   const [success, setSuccess] = useState("");
+  const [groupList, setGroupList] = useState([]);
 
   const auth = getAuth();
   const db = getDatabase();
@@ -55,6 +54,19 @@ const Creategroup = () => {
       });
     }
   };
+
+  useEffect(() => {
+    const groupRef = ref(db, "group/");
+    onValue(groupRef, (snapshot) => {
+      let groupArr = [];
+      snapshot.forEach((item) => {
+        if (auth.currentUser.uid !== item.val().adminid) {
+          groupArr.push(item.val());
+        }
+      });
+      setGroupList(groupArr);
+    });
+  }, []);
 
   return (
     <div className="w-full h-[250px]">
