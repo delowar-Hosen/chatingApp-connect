@@ -9,7 +9,7 @@ import { IoIosNotificationsOutline } from "react-icons/io";
 import { MdLogout } from "react-icons/md";
 import { getAuth, signOut, updateProfile } from "firebase/auth";
 import { ToastContainer, toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import {
@@ -108,7 +108,7 @@ const Sidebar = ({ active }) => {
         <picture>
           <img
             className=" rounded-full object-cover w-[100px] h-[100px] "
-            src={auth.currentUser.photoURL}
+            src={auth ? auth.currentUser.photoURL : ""}
           />
         </picture>
         <p className="text-center w-full font-dm font-bold text-white">
@@ -128,13 +128,15 @@ const Sidebar = ({ active }) => {
             "relative text-center z-10 py-5   after:absolute after:content-[''] after:top-0 after:left-[-45px] after:w-[200px] after:rounded-[20px] after:h-full after:bg-[#fff] after:z-[-1] before:absolute before:content-[''] before:top-0 before:right-[-77px] before:w-[20px] before:h-full before:bg-[#5F35F5] before:rounded-[25px] before:shadow-2xl  "
           }`}
         >
-          <SlHome
-            className={`${
-              active == "home"
-                ? " text-5xl text-[#5F35F5] "
-                : " text-5xl text-[#fff] "
-            }`}
-          />
+          <Link to="/">
+            <SlHome
+              className={`${
+                active == "home"
+                  ? " text-5xl text-[#5F35F5] "
+                  : " text-5xl text-[#fff] "
+              }`}
+            />
+          </Link>
         </div>
         <div
           className={`${
@@ -142,13 +144,15 @@ const Sidebar = ({ active }) => {
             "relative text-center z-10 py-5   after:absolute after:content-[''] after:top-0 after:left-[-45px] after:w-[200px] after:rounded-[20px] after:h-full after:bg-[#fff] after:z-[-1] before:absolute before:content-[''] before:top-0 before:right-[-77px] before:w-[20px] before:h-full before:bg-[#5F35F5] before:rounded-[25px] before:shadow-2xl  "
           }`}
         >
-          <AiOutlineMessage
-            className={`${
-              active == "message"
-                ? " text-5xl text-[#5F35F5] "
-                : " text-5xl text-[#fff] "
-            }`}
-          />
+          <Link to="/message">
+            <AiOutlineMessage
+              className={`${
+                active == "message"
+                  ? " text-5xl text-[#5F35F5] "
+                  : " text-5xl text-[#fff] "
+              }`}
+            />
+          </Link>
         </div>
         <div
           className={`${

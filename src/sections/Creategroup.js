@@ -43,7 +43,7 @@ const Creategroup = () => {
     if (gName && gTag && !gNameErr && !gTagErr) {
       console.log("hello");
       set(push(ref(db, "group/")), {
-        name: gName,
+        gname: gName,
         tagline: gTag,
         adminname: auth.currentUser.displayName,
         adminid: auth.currentUser.uid,

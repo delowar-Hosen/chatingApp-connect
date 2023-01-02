@@ -11,12 +11,16 @@ import {
 } from "firebase/database";
 import { useState } from "react";
 import { getAuth } from "firebase/auth";
+import { BsChatRightText } from "react-icons/bs";
+import { useDispatch } from "react-redux";
+import { chatActive } from "../slice/ActiveChat";
 
-const Friendslist = () => {
+const Friendslist = (props) => {
   const [frienList, setFriendList] = useState([]);
 
   const db = getDatabase();
   const auth = getAuth();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const friendRef = ref(db, "friends/");
@@ -56,10 +60,25 @@ const Friendslist = () => {
       });
     }
   };
+
+  let handleChat = (item) => {
+    let userInfo = {};
+
+    if (item.senderid == auth.currentUser.uid) {
+      userInfo.status = "single";
+      userInfo.name = item.recivername;
+      userInfo.id = item.reciverid;
+    } else {
+      userInfo.status = "single";
+      userInfo.name = item.sendername;
+      userInfo.id = item.senderid;
+    }
+    dispatch(chatActive(userInfo));
+  };
   return (
     <>
       <div className="mt-[35px] ml-[22px]">
-        <div className="w-full shadow-2xl border rounded-[20px] py-[20px] px-[20px] h-[454px]">
+        <div className="w-full shadow-2xl border rounded-[20px] py-[20px] px-[20px] h-[454px] overflow-y-scroll">
           <div className="flex justify-between mb-[17px]">
             <h2 className="font-pop font-semibold text-xl text-[#000000]">
               Friends
@@ -91,13 +110,21 @@ const Friendslist = () => {
                   </p>
                 </div>
               </div>
-
-              <button
-                onClick={() => handleBlock(item)}
-                className="font-pop font-semibold text-sm w-[50px] h-[20px] bg-[#5F35F5] text-[#fff] mt-[12px] rounded-[5px] mr-[12px]"
-              >
-                block
-              </button>
+              {props.chat ? (
+                <button
+                  onClick={() => handleChat(item)}
+                  className="font-pop font-semibold text-sm w-[30px] h-[20px] flex justify-center items-center bg-[#5F35F5] text-[#fff] mt-[12px] rounded-[5px] mr-[12px]"
+                >
+                  <BsChatRightText />
+                </button>
+              ) : (
+                <button
+                  onClick={() => handleBlock(item)}
+                  className="font-pop font-semibold text-sm w-[50px] h-[20px] bg-[#5F35F5] text-[#fff] mt-[12px] rounded-[5px] mr-[12px]"
+                >
+                  block
+                </button>
+              )}
             </div>
           ))}
         </div>

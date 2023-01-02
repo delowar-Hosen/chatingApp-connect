@@ -1,4 +1,6 @@
 import React from "react";
+import Chat from "../../sections/Chat";
+import Joingrouplist from "../../sections/Joingrouplist";
 import Sidebar from "../../sections/Sidebar";
 
 const Message = () => {
@@ -7,9 +9,12 @@ const Message = () => {
       <div className="w-[186px] ">
         <Sidebar active="message" />
       </div>
-      <div className="w-[427px] ">hello</div>
-      <div className="w-[344px]">hello</div>
-      <div className="w-[344px] ">hello</div>
+      <div className="w-[427px] ">
+        <Joingrouplist />
+      </div>
+      <div className="w-[688px]">
+        <Chat />
+      </div>
     </div>
   );
 };

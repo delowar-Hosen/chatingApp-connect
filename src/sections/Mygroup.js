@@ -68,6 +68,7 @@ const Mygroup = () => {
       senderid: item.senderid,
       sendername: item.sendername,
       senderprofilepic: item.senderprofilepic,
+      gname: item.gname,
     }).then(() => {
       remove(ref(db, "groupjoinrequest/" + item.gkey));
     });
@@ -195,7 +196,7 @@ const Mygroup = () => {
                 </picture>
                 <div className="mt-[1px] pl-[5px]">
                   <h5 className="font-pop font-semibold text-[14px] leading-[27px] text-[#000000]">
-                    {item.name}
+                    {item.gname}
                   </h5>
                   <p className="font-pop font-medium text-[12px] leading-[21px] text-[#4D4D4DBF]">
                     {item.tagline}

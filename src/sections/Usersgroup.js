@@ -22,9 +22,8 @@ const Usersgroup = () => {
   }, []);
 
   let handlejoingroup = (item) => {
-    console.log(item);
     set(push(ref(db, "groupjoinrequest/")), {
-      gname: item.name,
+      gname: item.gname,
       gtagline: item.tagline,
       groupid: item.groupid,
       adminname: item.adminname,
@@ -47,7 +46,7 @@ const Usersgroup = () => {
             </picture>
             <div className="mt-[12px] pl-[14px]">
               <h5 className="font-pop font-semibold text-[18px] leading-[27px] text-[#000000]">
-                {item.name}
+                {item.gname}
               </h5>
               <p className="font-pop font-medium text-[14px] leading-[21px] text-[#4D4D4DBF]">
                 {item.tagline}

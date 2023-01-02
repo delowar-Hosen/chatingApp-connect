@@ -4,12 +4,14 @@ import { getDatabase, ref, onValue, set, push } from "firebase/database";
 import { useEffect } from "react";
 import { useState } from "react";
 import { getAuth } from "firebase/auth";
+import Search from "./Search";
 
 const Userlist = () => {
   const [userList, setUserList] = useState([]);
   const [friendReqList, setFriendReqList] = useState([]);
   const [friendList, setFriendList] = useState([]);
   const [blockUser, setBlockUser] = useState([]);
+  const [searchUser, setSearchUser] = useState([]);
 
   const db = getDatabase();
   const auth = getAuth();
@@ -68,6 +70,21 @@ const Userlist = () => {
       setFriendReqList(friendArr);
     });
   }, []);
+
+  let arr = [];
+
+  let handleSearchState = (e) => {
+    console.log(e.target.value);
+
+    userList.filter((item) => {
+      if (item.name.toLowerCase().includes(e.target.value.toLowerCase())) {
+        arr.push(item);
+      } else {
+        arr = [];
+      }
+      setSearchUser(arr);
+    });
+  };
   return (
     <>
       <div className="mt-[35px] ml-[19px]">
@@ -76,51 +93,96 @@ const Userlist = () => {
             <h2 className="font-pop font-semibold text-xl text-[#000000]">
               User List
             </h2>
-            <BsThreeDotsVertical className="text-[#5F35F5] mt-[5px]" />
+            <Search
+              state={handleSearchState}
+              className=" py-2 px-8 outline-1 w-40 "
+            />
           </div>
-
-          {userList.map((item) => (
-            <div className="flex justify-between  mt-[10px] border-b pb-[9px]">
-              <div className="flex">
-                <picture>
-                  <img
-                    className="rounded-full w-[52px] h-[52px]"
-                    src={item.photoURL}
-                  />
-                </picture>
-                <div className="mt-[5px] pl-[10px]">
-                  <h5 className="font-pop font-semibold text-[14px] leading-[21px] text-[#000000]">
-                    {item.name}
-                  </h5>
-                  <p className="font-pop font-medium text-[10px] text-[#000] rounded-[5px] ">
-                    {item.email}
-                  </p>
+          {searchUser.length > 0
+            ? searchUser.map((item) => (
+                <div className="flex justify-between  mt-[10px] border-b pb-[9px]">
+                  <div className="flex">
+                    <picture>
+                      <img
+                        className="rounded-full w-[52px] h-[52px]"
+                        src={item.photoURL}
+                      />
+                    </picture>
+                    <div className="mt-[5px] pl-[10px]">
+                      <h5 className="font-pop font-semibold text-[14px] leading-[21px] text-[#000000]">
+                        {item.name}
+                      </h5>
+                      <p className="font-pop font-medium text-[10px] text-[#000] rounded-[5px] ">
+                        {item.email}
+                      </p>
+                    </div>
+                  </div>
+                  {friendList.includes(auth.currentUser.uid + item.id) ||
+                  friendList.includes(item.id + auth.currentUser.uid) ? (
+                    <button className="font-pop font-normal text-[10px] bg-[#5F35F5] h-[20px] rounded-[5px] mt-4 px-1 py-1 text-white flex items-center">
+                      Friend
+                    </button>
+                  ) : friendReqList.includes(auth.currentUser.uid + item.id) ||
+                    friendReqList.includes(item.id + auth.currentUser.uid) ? (
+                    <button className="font-pop font-normal text-[10px] bg-[#5F35F5] h-[20px] rounded-[5px] mt-4 px-1 py-1 text-white flex items-center">
+                      Pending
+                    </button>
+                  ) : blockUser.includes(item.id) ? (
+                    <button className="font-pop font-normal text-[10px] bg-[#5F35F5] h-[20px] rounded-[5px] mt-4 px-1 py-1 text-white flex items-center">
+                      Block
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => handleFriendRequest(item)}
+                      className="font-pop font-normal text-[10px] bg-[#5F35F5] h-[20px] rounded-[5px] mt-4 px-1 py-1 text-white flex items-center"
+                    >
+                      Send Request
+                    </button>
+                  )}
                 </div>
-              </div>
-              {friendList.includes(auth.currentUser.uid + item.id) ||
-              friendList.includes(item.id + auth.currentUser.uid) ? (
-                <button className="font-pop font-normal text-[10px] bg-[#5F35F5] h-[20px] rounded-[5px] mt-4 px-1 py-1 text-white flex items-center">
-                  Friend
-                </button>
-              ) : friendReqList.includes(auth.currentUser.uid + item.id) ||
-                friendReqList.includes(item.id + auth.currentUser.uid) ? (
-                <button className="font-pop font-normal text-[10px] bg-[#5F35F5] h-[20px] rounded-[5px] mt-4 px-1 py-1 text-white flex items-center">
-                  Pending
-                </button>
-              ) : blockUser.includes(item.id) ? (
-                <button className="font-pop font-normal text-[10px] bg-[#5F35F5] h-[20px] rounded-[5px] mt-4 px-1 py-1 text-white flex items-center">
-                  Block
-                </button>
-              ) : (
-                <button
-                  onClick={() => handleFriendRequest(item)}
-                  className="font-pop font-normal text-[10px] bg-[#5F35F5] h-[20px] rounded-[5px] mt-4 px-1 py-1 text-white flex items-center"
-                >
-                  Send Request
-                </button>
-              )}
-            </div>
-          ))}
+              ))
+            : userList.map((item) => (
+                <div className="flex justify-between  mt-[10px] border-b pb-[9px]">
+                  <div className="flex">
+                    <picture>
+                      <img
+                        className="rounded-full w-[52px] h-[52px]"
+                        src={item.photoURL}
+                      />
+                    </picture>
+                    <div className="mt-[5px] pl-[10px]">
+                      <h5 className="font-pop font-semibold text-[14px] leading-[21px] text-[#000000]">
+                        {item.name}
+                      </h5>
+                      <p className="font-pop font-medium text-[10px] text-[#000] rounded-[5px] ">
+                        {item.email}
+                      </p>
+                    </div>
+                  </div>
+                  {friendList.includes(auth.currentUser.uid + item.id) ||
+                  friendList.includes(item.id + auth.currentUser.uid) ? (
+                    <button className="font-pop font-normal text-[10px] bg-[#5F35F5] h-[20px] rounded-[5px] mt-4 px-1 py-1 text-white flex items-center">
+                      Friend
+                    </button>
+                  ) : friendReqList.includes(auth.currentUser.uid + item.id) ||
+                    friendReqList.includes(item.id + auth.currentUser.uid) ? (
+                    <button className="font-pop font-normal text-[10px] bg-[#5F35F5] h-[20px] rounded-[5px] mt-4 px-1 py-1 text-white flex items-center">
+                      Pending
+                    </button>
+                  ) : blockUser.includes(item.id) ? (
+                    <button className="font-pop font-normal text-[10px] bg-[#5F35F5] h-[20px] rounded-[5px] mt-4 px-1 py-1 text-white flex items-center">
+                      Block
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => handleFriendRequest(item)}
+                      className="font-pop font-normal text-[10px] bg-[#5F35F5] h-[20px] rounded-[5px] mt-4 px-1 py-1 text-white flex items-center"
+                    >
+                      Send Request
+                    </button>
+                  )}
+                </div>
+              ))}
         </div>
       </div>
     </>
