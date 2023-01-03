@@ -10,7 +10,8 @@ import {
 } from "firebase/auth";
 import { ThreeDots } from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";
-
+import Blockuser from "../../sections/Blockuser";
+import { getDatabase, ref, set, push } from "firebase/database";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [emailErr, setEmailErr] = useState("");
@@ -22,6 +23,7 @@ const Login = () => {
   const [forget, setForget] = useState(false);
   const [resetP, setResetP] = useState("");
 
+  const db = getDatabase();
   const auth = getAuth();
   const navigate = useNavigate();
   const provider = new GoogleAuthProvider();
@@ -94,6 +96,10 @@ const Login = () => {
               setLoader(false);
               navigate("/");
             }, 2000);
+            set(push(ref(db, "userstatus/")), {
+              userid: auth.currentUser.uid,
+              username: auth.currentUser.displayName,
+            });
           } else {
             setSuccess("");
             setSuccess("Please verify your email");

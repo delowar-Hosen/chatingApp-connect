@@ -44,6 +44,7 @@ const Chat = () => {
   const [reply, setReply] = useState("");
   const [replySendername, setReplySendername] = useState("");
   const [replySenderid, setReplySenderid] = useState("");
+  const [userOnline, setUserOnline] = useState([]);
 
   const addAudioElement = (blob) => {
     const url = URL.createObjectURL(blob);
@@ -135,6 +136,17 @@ const Chat = () => {
         }
       });
       setGroupMsg(arr);
+    });
+  }, [data ? data.id : ""]);
+
+  useEffect(() => {
+    const statusRef = ref(db, "userstatus/");
+    onValue(statusRef, (snapshot) => {
+      let arr = [];
+      snapshot.forEach((item) => {
+        arr.push(item.val());
+      });
+      setUserOnline(arr);
     });
   }, [data ? data.id : ""]);
 
@@ -293,9 +305,17 @@ const Chat = () => {
             <h5 className="font-pop font-semibold text-[18px] leading-[27px] text-[#000000]">
               {data ? data.name : "Select a group or friends"}
             </h5>
-            <p className="font-pop font-medium text-[14px] leading-[21px] text-[#4D4D4DBF]">
-              Online
-            </p>
+            {userOnline.map((item) =>
+              data.id == item.userid ? (
+                <p className="font-pop font-medium text-[14px] leading-[21px] text-[#4D4D4DBF]">
+                  Online
+                </p>
+              ) : (
+                <p className="font-pop font-medium text-[14px] leading-[21px] text-[#4D4D4DBF]">
+                  Ofline
+                </p>
+              )
+            )}
           </div>
         </div>
       </div>

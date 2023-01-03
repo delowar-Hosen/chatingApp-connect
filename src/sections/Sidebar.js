@@ -19,6 +19,14 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { ThreeDots } from "react-loader-spinner";
+import {
+  getDatabase,
+  ref as refer,
+  set,
+  push,
+  remove,
+  onValue,
+} from "firebase/database";
 
 const Sidebar = ({ active }) => {
   const [uploadPage, setUploadPage] = useState(false);
@@ -32,6 +40,7 @@ const Sidebar = ({ active }) => {
   const auth = getAuth();
   let navigate = useNavigate();
   const storage = getStorage();
+  const db = getDatabase();
 
   let handleImageUpload = (e) => {
     setFileName(e.target.files[0].name);
@@ -58,6 +67,8 @@ const Sidebar = ({ active }) => {
   };
 
   let handleLogout = () => {
+    let id = auth.currentUser.uid;
+
     signOut(auth)
       .then(() => {
         toast("Sign out Sucessfully !");
@@ -65,6 +76,16 @@ const Sidebar = ({ active }) => {
       })
       .catch((error) => {
         console.log(error);
+      })
+      .then(() => {
+        const groupRef = refer(db, "userstatus/");
+        onValue(groupRef, (snapshot) => {
+          snapshot.forEach((item) => {
+            if (item.val().userid == id) {
+              remove(refer(db, "userstatus/" + item.key));
+            }
+          });
+        });
       });
   };
 
@@ -183,10 +204,11 @@ const Sidebar = ({ active }) => {
             }`}
           />
         </div>
+
         <MdLogout
-          onClick={handleLogout}
+          onClick={() => handleLogout(auth.currentUser.uid)}
           className=" text-5xl mt-36 text-[#fff] "
-        />
+        ></MdLogout>
       </div>
       {uploadPage && (
         <div className="w-full h-full bg-[#EA6C00] flex justify-center items-center fixed top-0 left-0 z-30 flex-col ">
