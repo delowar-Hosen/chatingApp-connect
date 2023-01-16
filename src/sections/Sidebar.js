@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { SlHome } from "react-icons/sl";
 import {
   AiOutlineMessage,
@@ -6,6 +6,7 @@ import {
   AiOutlineCloudUpload,
 } from "react-icons/ai";
 import { IoIosNotificationsOutline } from "react-icons/io";
+import { GoPrimitiveDot } from "react-icons/go";
 import { MdLogout } from "react-icons/md";
 import { getAuth, signOut, updateProfile } from "firebase/auth";
 import { ToastContainer, toast } from "react-toastify";
@@ -35,6 +36,7 @@ const Sidebar = ({ active }) => {
   const [cropper, setCropper] = useState();
   const [fileName, setFileName] = useState("");
   const [loading, setLoading] = useState(false);
+  const [noti, setNoti] = useState([]);
 
   const cropperRef = useRef();
   const auth = getAuth();
@@ -122,27 +124,67 @@ const Sidebar = ({ active }) => {
     }
   };
 
+  useEffect(() => {
+    const notificationRef = refer(db, "notification/");
+    onValue(notificationRef, (snapshot) => {
+      let arr = [];
+      snapshot.forEach((item) => {
+        if (auth.currentUser.uid == item.val().reciverid) {
+          arr.push(item.val());
+        }
+      });
+      set(push(refer(db, "notify-user/")), {
+        notifyreciver: auth.currentUser.uid,
+        length: arr.length,
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+    const notificationRef = refer(db, "notify-user/");
+    onValue(notificationRef, (snapshot) => {
+      let arr = [];
+      snapshot.forEach((item) => {
+        if (auth.currentUser.uid == item.val().notifyreciver) {
+          arr.push({ ...item.val(), key: item.key });
+        }
+      });
+      setNoti(arr);
+    });
+  }, []);
+
+  let handleNotify = () => {
+    const groupRef = refer(db, "notify-user/");
+    onValue(groupRef, (snapshot) => {
+      snapshot.forEach((item) => {
+        if (item.val().notifyreciver == auth.currentUser.uid) {
+          remove(refer(db, "notify-user/" + item.key));
+        }
+      });
+    });
+  };
+
   return (
-    <div className="bg-[#5F35F5] rounded-[20px] mt-[35px] mb-[35px] w-full h-full  overflow-x-hidden ">
+    <div className="bg-[#5F35F5] rounded-[20px] mt-[20px] w-full h-[96vh]  overflow-x-hidden ">
       <ToastContainer />
-      <div className="px-11 pt-9 pb-[79px] relative group ">
+      <div className="px-11 pt-5 pb-[20px] relative group ">
         <picture>
           <img
             className=" rounded-full object-cover w-[100px] h-[100px] "
-            src={auth ? auth.currentUser.photoURL : ""}
+            src={!auth ? "" : auth.currentUser.photoURL}
           />
         </picture>
         <p className="text-center w-full font-dm font-bold text-white">
           {auth.currentUser.displayName}
         </p>
-        <div className="  absolute top-[36px] hidden   group-hover:flex left-[43px] rounded-full w-[100px] h-[100px] bg-red-400 flex justify-center items-center ">
+        <div className="  absolute top-[20px] hidden   group-hover:flex left-[43px] rounded-full w-[100px] h-[100px] bg-red-400 flex justify-center items-center ">
           <AiOutlineCloudUpload
             onClick={() => setUploadPage(!uploadPage)}
             className="text-2xl text-white cursor-pointer"
           />
         </div>
       </div>
-      <div className="flex justify-center items-center flex-col gap-y-20">
+      <div className="flex justify-center items-center flex-col gap-y-7">
         <div
           className={`${
             active == "home" &&
@@ -181,13 +223,24 @@ const Sidebar = ({ active }) => {
             "relative text-center z-10 py-5   after:absolute after:content-[''] after:top-0 after:left-[-45px] after:w-[200px] after:rounded-[20px] after:h-full after:bg-[#fff] after:z-[-1] before:absolute before:content-[''] before:top-0 before:right-[-77px] before:w-[20px] before:h-full before:bg-[#5F35F5] before:rounded-[25px] before:shadow-2xl  "
           }`}
         >
-          <IoIosNotificationsOutline
-            className={`${
-              active == "notification"
-                ? " text-5xl text-[#5F35F5] "
-                : " text-5xl text-[#fff] "
-            }`}
-          />
+          <Link to="/notification">
+            <div className="relative">
+              <IoIosNotificationsOutline
+                onClick={handleNotify}
+                className={`${
+                  active == "notification"
+                    ? " text-5xl text-[#5F35F5] "
+                    : " text-5xl text-[#fff] "
+                }`}
+              />
+              {noti.map((item) => (
+                <span className="absolute top-[7px] right-[19px]  font-pop font-bold text-base text-[#0cd4db]">
+                  {item.length}
+                  {/* <GoPrimitiveDot className="text-white" /> */}
+                </span>
+              ))}
+            </div>
+          </Link>
         </div>
 
         <div
@@ -196,18 +249,20 @@ const Sidebar = ({ active }) => {
             "relative text-center z-10 py-5   after:absolute after:content-[''] after:top-0 after:left-[-45px] after:w-[200px] after:rounded-[20px] after:h-full after:bg-[#fff] after:z-[-1] before:absolute before:content-[''] before:top-0 before:right-[-77px] before:w-[20px] before:h-full before:bg-[#5F35F5] before:rounded-[25px] before:shadow-2xl  "
           }`}
         >
-          <AiOutlineSetting
-            className={`${
-              active == "settings"
-                ? " text-5xl text-[#5F35F5] "
-                : " text-5xl text-[#fff] "
-            }`}
-          />
+          <Link to="/settings">
+            <AiOutlineSetting
+              className={`${
+                active == "settings"
+                  ? " text-5xl text-[#5F35F5] "
+                  : " text-5xl text-[#fff] "
+              }`}
+            />
+          </Link>
         </div>
 
         <MdLogout
           onClick={() => handleLogout(auth.currentUser.uid)}
-          className=" text-5xl mt-36 text-[#fff] "
+          className=" text-5xl mt-8 text-[#fff] "
         ></MdLogout>
       </div>
       {uploadPage && (

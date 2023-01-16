@@ -23,6 +23,14 @@ const Userlist = () => {
       reciverId: item.id,
       reciverName: item.name,
     });
+
+    set(push(ref(db, "notification/")), {
+      senderid: auth.currentUser.uid,
+      sendername: auth.currentUser.displayName,
+      reciverid: item.id,
+      recivername: item.name,
+      state: "friend request",
+    });
   };
 
   useEffect(() => {
@@ -87,8 +95,8 @@ const Userlist = () => {
   };
   return (
     <>
-      <div className="mt-[35px] ml-[19px]">
-        <div className="w-full h-[452px] shadow-2xl border rounded-[20px] py-[20px] px-[20px]">
+      <div className="mt-[20px] ml-[19px]">
+        <div className="w-full h-[47vh] overflow-y-scroll shadow-2xl border rounded-[20px] py-[20px] px-[20px]">
           <div className="flex justify-between mb-[17px]">
             <h2 className="font-pop font-semibold text-xl text-[#000000]">
               User List

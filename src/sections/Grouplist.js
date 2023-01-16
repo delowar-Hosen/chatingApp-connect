@@ -9,9 +9,9 @@ const Grouplist = () => {
 
   return (
     <>
-      <div className="mt-[35px] ml-[43px]">
-        <Search className="drop-shadow rounded-[20px] py-[17px] px-[78px] outline-0 w-full" />
-        <div className="w-full shadow-2xl border rounded-[20px] py-[20px] px-[20px]">
+      <div className="mt-[20px] ml-[43px]">
+        <Search className="drop-shadow rounded-[20px] py-[10px] px-[78px] outline-0 w-full" />
+        <div className="w-full h-[38vh] overflow-y-scroll  shadow-2xl border rounded-[20px] py-[20px] px-[20px]">
           <div className="flex justify-between mb-[17px]">
             <h2 className="font-pop font-semibold text-xl text-[#000000]">
               Groups List

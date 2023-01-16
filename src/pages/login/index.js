@@ -89,6 +89,7 @@ const Login = () => {
       )
     ) {
       setLoader(true);
+
       signInWithEmailAndPassword(auth, email, password)
         .then((user) => {
           if (user.user.emailVerified) {
@@ -96,16 +97,13 @@ const Login = () => {
               setLoader(false);
               navigate("/");
             }, 2000);
-            set(push(ref(db, "userstatus/")), {
-              userid: auth.currentUser.uid,
-              username: auth.currentUser.displayName,
-            });
           } else {
             setSuccess("");
             setSuccess("Please verify your email");
             setLoader(false);
           }
         })
+
         .catch((error) => {
           const errorCode = error.code;
           console.log(errorCode);

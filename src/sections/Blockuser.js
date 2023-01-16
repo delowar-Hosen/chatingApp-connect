@@ -41,6 +41,7 @@ const Blockuser = () => {
   }, []);
 
   let handleUnblock = (item) => {
+    // console.log(item);
     set(push(ref(db, "friends/")), {
       id: item.id,
       sendername: item.blockname,
@@ -51,10 +52,18 @@ const Blockuser = () => {
     }).then(() => {
       remove(ref(db, "blockusers/" + item.id));
     });
+
+    set(push(ref(db, "notification/")), {
+      senderid: auth.currentUser.uid,
+      sendername: auth.currentUser.displayName,
+      reciverid: item.block,
+      recivername: item.blockname,
+      state: "Unblock",
+    });
   };
   return (
-    <div className="mt-[45px] ml-[19px]">
-      <div className="w-full h-[452px] shadow-2xl border rounded-[20px] py-[20px] px-[20px]">
+    <div className="mt-[30px] ml-[19px]">
+      <div className="w-full h-[40vh] overflow-y-scroll shadow-2xl border rounded-[20px] py-[20px] px-[20px]">
         <div className="flex justify-between mb-[17px]">
           <h2 className="font-pop font-semibold text-xl text-[#000000]">
             Blocked Users

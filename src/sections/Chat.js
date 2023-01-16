@@ -21,7 +21,6 @@ import {
 import { ImCross } from "react-icons/im";
 import { BsEmojiLaughingFill, BsReply } from "react-icons/bs";
 import EmojiPicker from "emoji-picker-react";
-import ReactDOM from "react-dom/client";
 import { AudioRecorder, useAudioRecorder } from "react-audio-voice-recorder";
 
 const Chat = () => {
@@ -144,7 +143,11 @@ const Chat = () => {
     onValue(statusRef, (snapshot) => {
       let arr = [];
       snapshot.forEach((item) => {
-        arr.push(item.val());
+        if (data) {
+          if (item.val().userid == data.id) {
+            arr.push(item.val());
+          }
+        }
       });
       setUserOnline(arr);
     });
@@ -305,21 +308,43 @@ const Chat = () => {
             <h5 className="font-pop font-semibold text-[18px] leading-[27px] text-[#000000]">
               {data ? data.name : "Select a group or friends"}
             </h5>
-            {userOnline.map((item) =>
-              data.id == item.userid ? (
-                <p className="font-pop font-medium text-[14px] leading-[21px] text-[#4D4D4DBF]">
-                  Online
-                </p>
-              ) : (
-                <p className="font-pop font-medium text-[14px] leading-[21px] text-[#4D4D4DBF]">
-                  Ofline
-                </p>
+
+            {data && userOnline == "" ? (
+              <p className="font-pop font-medium text-[14px] leading-[21px] text-[#4D4D4DBF]">
+                Ofline
+              </p>
+            ) : (
+              userOnline.map((item) =>
+                item.userid == data.id ? (
+                  <p className="font-pop font-medium text-[14px] leading-[21px] text-[#4D4D4DBF]">
+                    Online
+                  </p>
+                ) : (
+                  <p className="font-pop font-medium text-[14px] leading-[21px] text-[#4D4D4DBF]">
+                    Ofline
+                  </p>
+                )
               )
             )}
+
+            {/* {data ? (
+              userOnline.map(
+                (item) =>
+                  item.userid == data.id && (
+                    <p className="font-pop font-medium text-[14px] leading-[21px] text-[#4D4D4DBF]">
+                      Online
+                    </p>
+                  )
+              )
+            ) : (
+              <p className="font-pop font-medium text-[14px] leading-[21px] text-[#4D4D4DBF]">
+                Ofline
+              </p>
+            )} */}
           </div>
         </div>
       </div>
-      <div className="w-full h-[65vh] bg-[#FFFFFF] p-5  overflow-y-scroll  border-b ">
+      <div className="w-full h-[60vh] bg-[#FFFFFF] p-5  overflow-y-scroll  border-b ">
         {data && data.status == "single"
           ? singleMsg.map((item) =>
               item.msgsenderid == auth.currentUser.uid ? (

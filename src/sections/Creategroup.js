@@ -47,6 +47,7 @@ const Creategroup = () => {
         tagline: gTag,
         adminname: auth.currentUser.displayName,
         adminid: auth.currentUser.uid,
+        groupPic: "images/pic.png",
       }).then(() => {
         setGname("");
         setGTag("");
@@ -69,7 +70,7 @@ const Creategroup = () => {
   }, []);
 
   return (
-    <div className="w-full h-[250px]">
+    <div className="w-full h-[20vh]">
       {success && (
         <p className="font-nunito font-normal mb-2 mt-1 px-2 rounded-lg text-base text-[#fff] bg-red-600">
           {success}
@@ -77,7 +78,7 @@ const Creategroup = () => {
       )}
 
       <input
-        className="  rounded-[5px] py-[10px] px-[20px] border w-full mb-[10px] mt-10"
+        className="  rounded-[5px] py-[10px] px-[20px] border w-full mb-[5px] mt-2"
         placeholder="Group Name"
         onChange={handleName}
         value={gName}

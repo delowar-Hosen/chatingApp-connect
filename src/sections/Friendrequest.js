@@ -37,13 +37,23 @@ const Friendrequest = () => {
       recivername: item.reciverName,
       reciverid: item.reciverId,
       date: `${new Date().getDate()}/${new Date().getMonth()}/${new Date().getFullYear()}`,
-    }).then(() => {
-      remove(ref(db, "friend-Request/" + item.id));
-    });
+    })
+      .then(() => {
+        remove(ref(db, "friend-Request/" + item.id));
+      })
+      .then(() => {
+        set(push(ref(db, "notification/")), {
+          senderid: auth.currentUser.uid,
+          sendername: auth.currentUser.displayName,
+          reciverid: item.senderId,
+          recivername: item.senderName,
+          state: "Accept Friend request",
+        });
+      });
   };
   return (
-    <div className="mt-[45px] ml-[43px]">
-      <div className="w-full shadow-2xl border rounded-[20px] py-[20px] px-[20px]">
+    <div className="mt-[30px] ml-[43px]">
+      <div className="w-full  h-[40vh] overflow-y-scroll shadow-2xl border rounded-[20px] py-[20px] px-[20px]">
         <div className="flex justify-between mb-[17px]">
           <h2 className="font-pop font-semibold text-xl text-[#000000]">
             Friend Request

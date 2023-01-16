@@ -68,7 +68,7 @@ const Joingrouplist = () => {
               <picture>
                 <img
                   className="bg-[red] rounded-full w-[70px] h-[70px]"
-                  src="images/pic.png"
+                  src={item.groupPic}
                 />
               </picture>
               <div className="mt-[12px] pl-[14px]">
