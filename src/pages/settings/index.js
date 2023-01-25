@@ -1,5 +1,6 @@
 import React from "react";
 import Sidebar from "../../sections/Sidebar";
+import UserSettings from "../../sections/UserSettings";
 
 const Settings = () => {
   return (
@@ -7,9 +8,9 @@ const Settings = () => {
       <div className="w-[186px] ">
         <Sidebar active="settings" />
       </div>
-      <div className="w-[427px] ">hello</div>
-      <div className="w-[344px]">hello</div>
-      <div className="w-[344px] ">hello</div>
+      <div className="w-[1115px] ">
+        <UserSettings />
+      </div>
     </div>
   );
 };

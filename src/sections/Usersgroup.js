@@ -4,6 +4,8 @@ import { set, ref, push, getDatabase, onValue } from "firebase/database";
 
 const Usersgroup = () => {
   const [groupList, setGroupList] = useState([]);
+  const [joinReq, setJoinReq] = useState([]);
+  const [member, setMember] = useState([]);
 
   const auth = getAuth();
   const db = getDatabase();
@@ -18,6 +20,28 @@ const Usersgroup = () => {
         }
       });
       setGroupList(groupArr);
+    });
+  }, []);
+
+  useEffect(() => {
+    const groupRef = ref(db, "groupjoinrequest/");
+    onValue(groupRef, (snapshot) => {
+      let arr = [];
+      snapshot.forEach((item) => {
+        arr.push(item.val().senderid + item.val().groupid);
+      });
+      setJoinReq(arr);
+    });
+  }, []);
+
+  useEffect(() => {
+    const groupRef = ref(db, "groupmembers/");
+    onValue(groupRef, (snapshot) => {
+      let arr = [];
+      snapshot.forEach((item) => {
+        arr.push(item.val().groupid + item.val().senderid);
+      });
+      setMember(arr);
     });
   }, []);
 
@@ -53,22 +77,33 @@ const Usersgroup = () => {
                 src={item.groupPic}
               />
             </picture>
-            <div className="mt-[10px] pl-[14px] mb-[10px]">
-              <h5 className="font-pop font-semibold text-[18px] leading-[27px] text-[#000000]">
+            <div className="xl:mt-[10px] pl-[14px] mb-[10px]">
+              <h5 className="font-pop font-semibold text-[18px] leading-[27px] ">
                 {item.gname}
               </h5>
-              <p className="font-pop font-medium text-[14px] leading-[21px] text-[#4D4D4DBF]">
+              <p className="font-pop font-medium text-[14px] leading-[21px] ">
                 {item.tagline}
               </p>
             </div>
           </div>
-
-          <button
-            onClick={() => handlejoingroup(item)}
-            className="font-pop font-semibold text-xl w-[87px] h-[30px] bg-[#5F35F5] text-[#fff] mt-[20px] rounded-[5px] mr-[12px]"
-          >
-            Join
-          </button>
+          {joinReq.includes(item.groupid + auth.currentUser.uid) ||
+          joinReq.includes(auth.currentUser.uid + item.groupid) ? (
+            <button className="font-pop font-semibold text-base xl:text-xl w-[87px] h-[30px] bg-[#5F35F5]  mt-[20px] rounded-[5px] mr-[12px]">
+              Pending
+            </button>
+          ) : member.includes(item.groupid + auth.currentUser.uid) ||
+            member.includes(auth.currentUser.uid + item.groupid) ? (
+            <button className="font-pop font-semibold text-base xl:text-xl w-[87px] h-[30px] bg-[#5F35F5] mt-[20px] rounded-[5px] mr-[12px]">
+              Member
+            </button>
+          ) : (
+            <button
+              onClick={() => handlejoingroup(item)}
+              className="font-pop font-semibold text-xl w-[87px] h-[30px] bg-[#5F35F5]  mt-[20px] rounded-[5px] mr-[12px]"
+            >
+              Join
+            </button>
+          )}
         </div>
       ))}
     </>

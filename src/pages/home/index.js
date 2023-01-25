@@ -39,20 +39,20 @@ const Home = () => {
   return (
     <>
       {varify && (
-        <div className="flex justify-center items-center">
-          <div className="flex">
-            <div className="w-[186px] ">
+        <div className="m-5 xl:m-0 xl:flex justify-center items-center">
+          <div className="xl:flex">
+            <div className="fixed bottom-0 left-0 w-full xl:static   xl:w-[186px] z-50 ">
               <Sidebar active="home" />
             </div>
-            <div className="w-[427px] ">
+            <div className="w-[100%] xl:w-[427px] ">
               <Grouplist />
               <Friendrequest />
             </div>
-            <div className="w-[344px]">
+            <div className="w-full xl:w-[344px]">
               <Friendslist />
               <Mygroup />
             </div>
-            <div className="w-[344px] ">
+            <div className="w-full xl:w-[344px] ">
               <Userlist />
               <Blockuser />
             </div>

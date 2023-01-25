@@ -28,6 +28,19 @@ const Joingrouplist = () => {
   }, []);
 
   useEffect(() => {
+    const groupRef = ref(db, "group/");
+    onValue(groupRef, (snapshot) => {
+      let groupArr = [];
+      snapshot.forEach((item) => {
+        if (item.val().adminid == auth.currentUser.uid) {
+          groupArr.push({ ...item.val(), groupid: item.key });
+        }
+      });
+      setMyGroup(groupArr);
+    });
+  }, []);
+
+  useEffect(() => {
     const memberRef = ref(db, "groupmembers/");
     onValue(memberRef, (snapshot) => {
       let groupArr = [];
@@ -72,10 +85,10 @@ const Joingrouplist = () => {
                 />
               </picture>
               <div className="mt-[12px] pl-[14px]">
-                <h5 className="font-pop font-semibold text-[18px] leading-[27px] text-[#000000]">
+                <h5 className="font-pop font-semibold text-[18px] leading-[27px]">
                   {item.gname}
                 </h5>
-                <p className="font-pop font-medium text-[14px] leading-[21px] text-[#4D4D4DBF]">
+                <p className="font-pop font-medium text-[14px] leading-[21px] ">
                   {item.tagline}
                 </p>
               </div>
@@ -95,10 +108,10 @@ const Joingrouplist = () => {
                 />
               </picture>
               <div className="mt-[12px] pl-[14px]">
-                <h5 className="font-pop font-semibold text-[18px] leading-[27px] text-[#000000]">
+                <h5 className="font-pop font-semibold text-[18px] leading-[27px] ">
                   {item.gname}
                 </h5>
-                <p className="font-pop font-medium text-[14px] leading-[21px] text-[#4D4D4DBF]">
+                <p className="font-pop font-medium text-[14px] leading-[21px] ">
                   {item.tagline}
                 </p>
               </div>

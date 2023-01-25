@@ -70,7 +70,7 @@ const Creategroup = () => {
   }, []);
 
   return (
-    <div className="w-full h-[20vh]">
+    <div className="w-full xl:h-[20vh]">
       {success && (
         <p className="font-nunito font-normal mb-2 mt-1 px-2 rounded-lg text-base text-[#fff] bg-red-600">
           {success}

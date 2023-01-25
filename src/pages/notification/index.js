@@ -1,5 +1,6 @@
 import React from "react";
 import Sidebar from "../../sections/Sidebar";
+import UserNotify from "../../sections/UserNotify";
 
 const Notification = () => {
   return (
@@ -7,9 +8,9 @@ const Notification = () => {
       <div className="w-[186px] ">
         <Sidebar active="notification" />
       </div>
-      <div className="w-[427px] ">hello</div>
-      <div className="w-[344px]">hello</div>
-      <div className="w-[344px] ">hello</div>
+      <div className="w-[1100px] ">
+        <UserNotify />
+      </div>
     </div>
   );
 };

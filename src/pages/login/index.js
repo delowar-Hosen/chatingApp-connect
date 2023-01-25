@@ -122,13 +122,13 @@ const Login = () => {
   };
 
   return (
-    <div className="flex">
+    <div className=" p-5 xl:p-0 xl:flex ">
       <ToastContainer />
-      <div className="w-2/4 mt-5">
-        <h1 className="font-nunito font-bold text-[34px] text-[#11175D] flex justify-end mr-[207px]">
+      <div className="text-center xl:w-2/4 mt-5">
+        <h1 className="font-nunito font-bold text-2xl xl:text-[34px] text-[#11175D] xl:flex justify-end xl:mr-[207px]">
           Login to your account!
         </h1>
-        <div className="flex justify-end mr-[335px] mt-7">
+        <div className="flex justify-center xl:justify-end xl:mr-[335px] mt-7">
           <picture>
             <img
               className="cursor-pointer"
@@ -138,18 +138,19 @@ const Login = () => {
           </picture>
         </div>
 
-        <div className="mt-12 flex justify-end mr-[187px] flex-wrap">
+        <div className="mt-12 xl:flex justify-end xl:mr-[187px] flex-wrap">
           <div className="relative mb-10">
             <input
-              className="border-b border-[#03014C] outline-0 w-[368px] px-1 py-5 font-nunito font-semibold text-xl text-[#11175D] "
+              className="border-b border-[#03014C] outline-0 w-full xl:w-[368px] px-1 py-5 font-nunito font-semibold text-xl text-[#11175D] "
               type="email"
               onChange={handleEmail}
+              placeholder="Email"
             />
-            <p className=" absolute top-0 left-0  font-nunito font-semibold text-[13px] text-[#03014C]">
+            <p className="hidden xl:block absolute top-10 left-3 xl:top-0 xl:left-0  font-nunito font-semibold text-[13px] text-[#03014C]">
               Email Address
             </p>
             {emailErr && (
-              <p className="font-nunito font-normal mt-1 px-2 rounded-lg text-base text-[#fff] bg-red-600">
+              <p className="font-nunito font-normal mt-1 px-2 rounded-xl text-base text-[#fff] bg-red-600">
                 {emailErr}
               </p>
             )}
@@ -158,11 +159,11 @@ const Login = () => {
             {show ? (
               <div className="relative mb-1">
                 <input
-                  className="border-b border-[#03014C] outline-0  w-[368px] px-1 py-5 font-nunito font-semibold text-xl text-[#11175D] "
+                  className="border-b border-[#03014C] outline-0  w-full xl:w-[368px] px-1 py-5 font-nunito font-semibold text-xl text-[#11175D] "
                   type={show ? "text" : "password"}
                   onChange={handlePassword}
                 />
-                <p className=" absolute top-0 left-0 font-nunito font-semibold text-[13px] text-[#03014C]">
+                <p className=" absolute top-10 left-3 xl:top-0 xl:left-0 font-nunito font-semibold text-[13px] text-[#03014C]">
                   Password
                 </p>
 
@@ -174,11 +175,12 @@ const Login = () => {
             ) : (
               <div className="relative mb-1">
                 <input
-                  className="border-b border-[#03014C] outline-0  w-[368px] px-1 py-5 font-nunito font-semibold text-xl text-[#11175D] "
+                  className="border-b border-[#03014C] outline-0  w-full xl:w-[368px] px-1 py-5 font-nunito font-semibold text-xl text-[#11175D] "
                   type={show ? "text" : "password"}
                   onChange={handlePassword}
+                  placeholder="Password"
                 />
-                <p className=" absolute top-0 left-0 font-nunito font-semibold text-[13px] text-[#03014C]">
+                <p className=" hidden xl:block absolute top-10 left-3 xl:top-0 xl:left-0 font-nunito font-semibold text-[13px] text-[#03014C]">
                   Password
                 </p>
                 <RiEyeCloseFill
@@ -188,13 +190,13 @@ const Login = () => {
               </div>
             )}
             {passwordErr && (
-              <p className="font-nunito font-normal px-2 mt-1 rounded-lg text-base text-[#fff] bg-red-600">
+              <p className="font-nunito font-normal px-2 mt-1 rounded-xl text-base text-[#fff] bg-red-600">
                 {passwordErr}
               </p>
             )}
           </div>
           {success && (
-            <p className="font-nunito font-normal w-[368px]  text-center px-2  mb-1 rounded-lg text-base text-[#fff] bg-red-600">
+            <p className="font-nunito font-normal w-[368px]  text-center px-2  mb-1 rounded-xl text-base text-[#fff] bg-red-600">
               {success}
             </p>
           )}
@@ -213,14 +215,14 @@ const Login = () => {
             </div>
           ) : (
             <button
-              className="border border-[#11175D] bg-[#5F35F5] rounded-lg w-[368px] px-12 py-4 font-nunito font-semibold text-xl text-[#FFFFFF] "
+              className="border border-[#11175D] bg-[#5F35F5] rounded-xl w-full xl:w-[368px] px-12 py-4 font-nunito font-semibold text-xl text-[#FFFFFF] "
               type="button"
               onClick={handleLogin}
             >
               Login to Continue
             </button>
           )}
-          <div className="w-[368px] text-center mt-6">
+          <div className="xl:w-[368px] text-center mt-6">
             <p className="font-nunito font-semibold text-[13px] text-[#11175D]">
               Don’t have an account ?
               <Link className="text-[#EA6C00]" to="/registration">
@@ -229,7 +231,7 @@ const Login = () => {
               </Link>{" "}
             </p>
           </div>
-          <div className="w-[368px] text-center mt-2">
+          <div className="xl:w-[368px] text-center mt-2">
             <p className="font-nunito font-semibold text-[13px] text-[#11175D]">
               Don’t remeber password ?
               <button
@@ -243,7 +245,7 @@ const Login = () => {
         </div>
       </div>
 
-      <div className="w-2/4">
+      <div className="hidden xl:block w-2/4">
         <picture>
           <img
             className="h-screen w-full object-cover"
@@ -258,13 +260,13 @@ const Login = () => {
           </h3>
           <div className="mb-10 flex flex-col">
             <input
-              className="mb-5 border border-[#03014C] rounded-lg outline-0 w-[368px] px-5 py-5 font-nunito font-semibold text-xl text-[#11175D] "
+              className="mb-5 border border-[#03014C] rounded-xl outline-0 w-[368px] px-5 py-5 font-nunito font-semibold text-xl text-[#11175D] "
               type="email"
               onChange={handleResetPassword}
               placeholder="Email Address"
             />
             <button
-              className="border border-[#11175D] bg-[#5F35F5] rounded-lg w-[368px] px-12 py-4 font-nunito font-semibold text-xl text-[#FFFFFF] "
+              className="border border-[#11175D] bg-[#5F35F5] rounded-xl w-[368px] px-12 py-4 font-nunito font-semibold text-xl text-[#FFFFFF] "
               type="button"
               onClick={handlePasswordChanged}
             >

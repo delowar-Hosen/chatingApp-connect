@@ -99,12 +99,10 @@ const Friendslist = (props) => {
   };
   return (
     <>
-      <div className="mt-[20px] ml-[43px]">
+      <div className="mt-[20px] xl:ml-[43px]">
         <div className="w-full shadow-2xl border rounded-[20px] py-[20px] px-[20px] h-[47vh] overflow-y-scroll">
           <div className="flex justify-between mb-[17px]">
-            <h2 className="font-pop font-semibold text-xl text-[#000000]">
-              Friends
-            </h2>
+            <h2 className="font-pop font-semibold text-xl">Friends</h2>
             <BsThreeDotsVertical className="text-[#5F35F5] mt-[5px]" />
           </div>
           {frienList.map((item) => (
@@ -118,16 +116,16 @@ const Friendslist = (props) => {
                 </picture>
                 <div className=" pl-[14px]">
                   {auth.currentUser.uid == item.senderid ? (
-                    <h5 className="font-pop font-semibold text-[14px] leading-[27px] text-[#000000]">
+                    <h5 className="font-pop font-semibold text-[14px] leading-[27px] ">
                       {item.recivername}
                     </h5>
                   ) : (
-                    <h5 className="font-pop font-semibold text-[14px] leading-[27px] text-[#000000]">
+                    <h5 className="font-pop font-semibold text-[14px] leading-[27px] ">
                       {item.sendername}
                     </h5>
                   )}
 
-                  <p className="font-pop font-medium text-[12px] leading-[21px] text-[#4D4D4DBF]">
+                  <p className="font-pop font-medium text-[12px] leading-[21px] ">
                     {item.date}
                   </p>
                 </div>
@@ -135,14 +133,14 @@ const Friendslist = (props) => {
               {props.chat ? (
                 <button
                   onClick={() => handleChat(item)}
-                  className="font-pop font-semibold text-sm w-[30px] h-[20px] flex justify-center items-center bg-[#5F35F5] text-[#fff] mt-[12px] rounded-[5px] mr-[12px]"
+                  className="font-pop font-semibold text-sm w-[30px] h-[20px] flex justify-center items-center bg-[#5F35F5]  mt-[12px] rounded-[5px] mr-[12px]"
                 >
                   <BsChatRightText />
                 </button>
               ) : (
                 <button
                   onClick={() => handleBlock(item)}
-                  className="font-pop font-semibold text-sm w-[50px] h-[20px] bg-[#5F35F5] text-[#fff] mt-[12px] rounded-[5px] mr-[12px]"
+                  className="font-pop font-semibold text-sm w-[50px] h-[20px] bg-[#5F35F5] mt-[12px] rounded-[5px] mr-[12px]"
                 >
                   block
                 </button>

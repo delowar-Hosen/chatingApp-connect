@@ -38,7 +38,7 @@ const Userlist = () => {
     onValue(friendRef, (snapshot) => {
       let blockArr = [];
       snapshot.forEach((item) => {
-        blockArr.push(item.val().blockid);
+        blockArr.push(item.val().blockid + item.val().blockby);
       });
       setBlockUser(blockArr);
     });
@@ -95,12 +95,10 @@ const Userlist = () => {
   };
   return (
     <>
-      <div className="mt-[20px] ml-[19px]">
+      <div className="mt-[20px] xl:ml-[19px]">
         <div className="w-full h-[47vh] overflow-y-scroll shadow-2xl border rounded-[20px] py-[20px] px-[20px]">
           <div className="flex justify-between mb-[17px]">
-            <h2 className="font-pop font-semibold text-xl text-[#000000]">
-              User List
-            </h2>
+            <h2 className="font-pop font-semibold text-xl ">User List</h2>
             <Search
               state={handleSearchState}
               className=" py-2 px-8 outline-1 w-40 "
@@ -112,37 +110,38 @@ const Userlist = () => {
                   <div className="flex">
                     <picture>
                       <img
-                        className="rounded-full w-[52px] h-[52px]"
+                        className="rounded-full w-[40px] h-[40px]"
                         src={item.photoURL}
                       />
                     </picture>
                     <div className="mt-[5px] pl-[10px]">
-                      <h5 className="font-pop font-semibold text-[14px] leading-[21px] text-[#000000]">
+                      <h5 className=" font-pop font-semibold text-[14px] leading-[21px] ">
                         {item.name}
                       </h5>
-                      <p className="font-pop font-medium text-[10px] text-[#000] rounded-[5px] ">
+                      <p className="font-pop font-medium text-[10px] rounded-[5px] ">
                         {item.email}
                       </p>
                     </div>
                   </div>
                   {friendList.includes(auth.currentUser.uid + item.id) ||
                   friendList.includes(item.id + auth.currentUser.uid) ? (
-                    <button className="font-pop font-normal text-[10px] bg-[#5F35F5] h-[20px] rounded-[5px] mt-4 px-1 py-1 text-white flex items-center">
+                    <button className="font-pop font-normal text-[10px] text-white bg-[#5F35F5] h-[20px] rounded-[5px] mt-4 px-1 py-1 flex items-center">
                       Friend
                     </button>
                   ) : friendReqList.includes(auth.currentUser.uid + item.id) ||
                     friendReqList.includes(item.id + auth.currentUser.uid) ? (
-                    <button className="font-pop font-normal text-[10px] bg-[#5F35F5] h-[20px] rounded-[5px] mt-4 px-1 py-1 text-white flex items-center">
+                    <button className="font-pop font-normal text-[10px] bg-[#5F35F5] h-[20px] rounded-[5px] mt-4 px-1 py-1flex items-center">
                       Pending
                     </button>
-                  ) : blockUser.includes(item.id) ? (
-                    <button className="font-pop font-normal text-[10px] bg-[#5F35F5] h-[20px] rounded-[5px] mt-4 px-1 py-1 text-white flex items-center">
+                  ) : blockUser.includes(item.id + auth.currentUser.uid) ||
+                    blockUser.includes(auth.currentUser.uid + item.id) ? (
+                    <button className="font-pop font-normal text-[10px] bg-[#5F35F5] h-[20px] rounded-[5px] mt-4 px-1 py-1 flex items-center">
                       Block
                     </button>
                   ) : (
                     <button
                       onClick={() => handleFriendRequest(item)}
-                      className="font-pop font-normal text-[10px] bg-[#5F35F5] h-[20px] rounded-[5px] mt-4 px-1 py-1 text-white flex items-center"
+                      className="font-pop font-normal text-[10px] bg-[#5F35F5] h-[20px] rounded-[5px] mt-4 px-1 py-1  flex items-center"
                     >
                       Send Request
                     </button>
@@ -159,32 +158,33 @@ const Userlist = () => {
                       />
                     </picture>
                     <div className="mt-[5px] pl-[10px]">
-                      <h5 className="font-pop font-semibold text-[14px] leading-[21px] text-[#000000]">
+                      <h5 className="font-pop font-semibold text-[14px] leading-[21px] ">
                         {item.name}
                       </h5>
-                      <p className="font-pop font-medium text-[10px] text-[#000] rounded-[5px] ">
+                      <p className="font-pop font-medium text-[10px]  rounded-[5px] ">
                         {item.email}
                       </p>
                     </div>
                   </div>
                   {friendList.includes(auth.currentUser.uid + item.id) ||
                   friendList.includes(item.id + auth.currentUser.uid) ? (
-                    <button className="font-pop font-normal text-[10px] bg-[#5F35F5] h-[20px] rounded-[5px] mt-4 px-1 py-1 text-white flex items-center">
+                    <button className="font-pop font-normal text-[10px] bg-[#5F35F5] h-[20px] rounded-[5px] mt-4 px-1 py-1 flex items-center">
                       Friend
                     </button>
                   ) : friendReqList.includes(auth.currentUser.uid + item.id) ||
                     friendReqList.includes(item.id + auth.currentUser.uid) ? (
-                    <button className="font-pop font-normal text-[10px] bg-[#5F35F5] h-[20px] rounded-[5px] mt-4 px-1 py-1 text-white flex items-center">
+                    <button className="font-pop font-normal text-[10px] bg-[#5F35F5] h-[20px] rounded-[5px] mt-4 px-1 py-1 flex items-center">
                       Pending
                     </button>
-                  ) : blockUser.includes(item.id) ? (
-                    <button className="font-pop font-normal text-[10px] bg-[#5F35F5] h-[20px] rounded-[5px] mt-4 px-1 py-1 text-white flex items-center">
+                  ) : blockUser.includes(item.id + auth.currentUser.uid) ||
+                    blockUser.includes(auth.currentUser.uid + item.id) ? (
+                    <button className="font-pop font-normal text-[10px] bg-[#5F35F5] h-[20px] rounded-[5px] mt-4 px-1 py-1 flex items-center">
                       Block
                     </button>
                   ) : (
                     <button
                       onClick={() => handleFriendRequest(item)}
-                      className="font-pop font-normal text-[10px] bg-[#5F35F5] h-[20px] rounded-[5px] mt-4 px-1 py-1 text-white flex items-center"
+                      className="font-pop font-normal text-[10px] bg-[#5F35F5] h-[20px] rounded-[5px] mt-4 px-1 py-1 flex items-center"
                     >
                       Send Request
                     </button>

@@ -37,6 +37,7 @@ const Sidebar = ({ active }) => {
   const [fileName, setFileName] = useState("");
   const [loading, setLoading] = useState(false);
   const [noti, setNoti] = useState([]);
+  const [user, setUser] = useState([]);
 
   const cropperRef = useRef();
   const auth = getAuth();
@@ -164,39 +165,58 @@ const Sidebar = ({ active }) => {
     });
   };
 
+  useEffect(() => {
+    const notificationRef = refer(db, "users/");
+    onValue(notificationRef, (snapshot) => {
+      let arr = [];
+      snapshot.forEach((item) => {
+        if (auth.currentUser.uid == item.val().id) {
+          arr.push({ ...item.val(), key: item.key });
+        }
+      });
+      setUser(arr);
+    });
+  }, []);
+
   return (
-    <div className="bg-[#5F35F5] rounded-[20px] mt-[20px] w-full h-[96vh]  overflow-x-hidden ">
+    <div className=" bg-[#5F35F5] rounded-[20px] mt-[20px] w-full xl:h-[96vh]  xl:overflow-x-hidden ">
       <ToastContainer />
-      <div className="px-11 pt-5 pb-[20px] relative group ">
-        <picture>
-          <img
-            className=" rounded-full object-cover w-[100px] h-[100px] "
-            src={!auth ? "" : auth.currentUser.photoURL}
-          />
-        </picture>
-        <p className="text-center w-full font-dm font-bold text-white">
-          {auth.currentUser.displayName}
-        </p>
-        <div className="  absolute top-[20px] hidden   group-hover:flex left-[43px] rounded-full w-[100px] h-[100px] bg-red-400 flex justify-center items-center ">
-          <AiOutlineCloudUpload
-            onClick={() => setUploadPage(!uploadPage)}
-            className="text-2xl text-white cursor-pointer"
-          />
+      {user.map((item) => (
+        <div className="flex items-center justify-center  xl:static">
+          <div className="px-11 pt-1 xl:pt-5 pb-1 xl:pb-[20px] relative group ">
+            <picture>
+              <img
+                className=" ml-6 xl:ml-0 rounded-full object-cover w-[50px] h-[50px] xl:w-[100px] xl:h-[100px] "
+                src={item.photoURL}
+              />
+            </picture>
+            <p className="xl:text-center w-full font-dm font-bold text-white">
+              {item.name}
+            </p>
+
+            <div className="  absolute top-[4px] xl:top-[20px] hidden   group-hover:flex left-[68px] xl:left-[43px] rounded-full w-[50px] xl:w-[100px] h-[50px] xl:h-[100px] bg-red-400 flex justify-center items-center ">
+              <AiOutlineCloudUpload
+                onClick={() => setUploadPage(!uploadPage)}
+                className="text-2xl text-white cursor-pointer"
+              />
+            </div>
+          </div>
         </div>
-      </div>
-      <div className="flex justify-center items-center flex-col gap-y-7">
+      ))}
+
+      <div className="p-5 xl:p-0 flex justify-between xl:justify-center items-center xl:flex-col xl:gap-y-7">
         <div
           className={`${
             active == "home" &&
-            "relative text-center z-10 py-5   after:absolute after:content-[''] after:top-0 after:left-[-45px] after:w-[200px] after:rounded-[20px] after:h-full after:bg-[#fff] after:z-[-1] before:absolute before:content-[''] before:top-0 before:right-[-77px] before:w-[20px] before:h-full before:bg-[#5F35F5] before:rounded-[25px] before:shadow-2xl  "
+            "relative text-center z-10 py-1 xl:py-5   after:absolute after:content-[''] after:top-0 after:left-0 xl:after:left-[-45px] after:w-[50px] xl:after:w-[200px] after:rounded-[5px] xl:after:rounded-[20px] after:h-full after:bg-[#fff] after:z-[-1] xl:before:absolute before:content-[''] before:top-0 before:right-[-77px] before:w-[20px] before:h-full before:bg-[#5F35F5] before:rounded-[25px] before:shadow-2xl  "
           }`}
         >
           <Link to="/">
             <SlHome
               className={`${
                 active == "home"
-                  ? " text-5xl text-[#5F35F5] "
-                  : " text-5xl text-[#fff] "
+                  ? " text-xl xl:text-5xl text-[#5F35F5] "
+                  : " text-xl xl:text-5xl text-[#fff] "
               }`}
             />
           </Link>
@@ -204,15 +224,15 @@ const Sidebar = ({ active }) => {
         <div
           className={`${
             active == "message" &&
-            "relative text-center z-10 py-5   after:absolute after:content-[''] after:top-0 after:left-[-45px] after:w-[200px] after:rounded-[20px] after:h-full after:bg-[#fff] after:z-[-1] before:absolute before:content-[''] before:top-0 before:right-[-77px] before:w-[20px] before:h-full before:bg-[#5F35F5] before:rounded-[25px] before:shadow-2xl  "
+            "relative text-center z-10 py-1 xl:py-5   after:absolute after:content-[''] after:top-0 after:left-0 xl:after:left-[-45px] after:w-[50px] xl:after:w-[200px] after:rounded-[5px] xl:after:rounded-[20px] after:h-full after:bg-[#fff] after:z-[-1] before:absolute before:content-[''] before:top-0 before:right-[-77px] before:w-[20px] before:h-full before:bg-[#5F35F5] before:rounded-[25px] before:shadow-2xl  "
           }`}
         >
           <Link to="/message">
             <AiOutlineMessage
               className={`${
                 active == "message"
-                  ? " text-5xl text-[#5F35F5] "
-                  : " text-5xl text-[#fff] "
+                  ? "text-3xl xl:text-5xl text-[#5F35F5] "
+                  : "text-3xl xl:text-5xl text-[#fff] "
               }`}
             />
           </Link>
@@ -229,8 +249,8 @@ const Sidebar = ({ active }) => {
                 onClick={handleNotify}
                 className={`${
                   active == "notification"
-                    ? " text-5xl text-[#5F35F5] "
-                    : " text-5xl text-[#fff] "
+                    ? " text-3xl xl:text-5xl text-[#5F35F5] "
+                    : "text-3xl  xl:text-5xl text-[#fff] "
                 }`}
               />
               {noti.map((item) => (
@@ -253,8 +273,8 @@ const Sidebar = ({ active }) => {
             <AiOutlineSetting
               className={`${
                 active == "settings"
-                  ? " text-5xl text-[#5F35F5] "
-                  : " text-5xl text-[#fff] "
+                  ? "text-3xl xl:text-5xl text-[#5F35F5] "
+                  : "text-3xl xl:text-5xl text-[#fff] "
               }`}
             />
           </Link>
@@ -262,7 +282,7 @@ const Sidebar = ({ active }) => {
 
         <MdLogout
           onClick={() => handleLogout(auth.currentUser.uid)}
-          className=" text-5xl mt-8 text-[#fff] "
+          className="text-3xl xl:text-5xl xl:mt-8 text-[#fff] "
         ></MdLogout>
       </div>
       {uploadPage && (

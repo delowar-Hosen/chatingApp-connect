@@ -62,12 +62,10 @@ const Blockuser = () => {
     });
   };
   return (
-    <div className="mt-[30px] ml-[19px]">
+    <div className="mt-[30px] xl:ml-[19px]">
       <div className="w-full h-[40vh] overflow-y-scroll shadow-2xl border rounded-[20px] py-[20px] px-[20px]">
         <div className="flex justify-between mb-[17px]">
-          <h2 className="font-pop font-semibold text-xl text-[#000000]">
-            Blocked Users
-          </h2>
+          <h2 className="font-pop font-semibold text-xl ">Blocked Users</h2>
           <BsThreeDotsVertical className="text-[#5F35F5] mt-[5px]" />
         </div>
         {blockList.map((item) => (
@@ -80,10 +78,10 @@ const Blockuser = () => {
                 />
               </picture>
               <div className="mt-[5px] pl-[10px]">
-                <h5 className="font-pop font-semibold text-[14px] leading-[21px] text-[#000000]">
+                <h5 className="font-pop font-semibold text-[14px] leading-[21px] ">
                   {item.blockname}
                 </h5>
-                <p className="font-pop font-medium text-[10px] text-[#000] rounded-[5px] mr-[12px]">
+                <p className="font-pop font-medium text-[10px]  rounded-[5px] mr-[12px]">
                   Today, 8:56pm
                 </p>
               </div>
@@ -92,7 +90,7 @@ const Blockuser = () => {
             {!item.blockby && (
               <button
                 onClick={() => handleUnblock(item)}
-                className="font-pop font-semibold text-xl w-[100px] h-[30px] bg-[#5F35F5] text-[#fff] mt-[5px] rounded-[5px] mr-[12px]"
+                className="font-pop font-semibold text-xl w-[100px] h-[30px] bg-[#5F35F5]  mt-[5px] rounded-[5px] mr-[12px]"
               >
                 unblock
               </button>

@@ -216,19 +216,17 @@ const Mygroup = () => {
   };
 
   return (
-    <div className="mt-[30px] ml-[22px]">
+    <div className="mt-[30px] xl:ml-[22px]">
       <div className="w-full shadow-2xl border rounded-[20px] py-[20px] px-[20px]  h-[40vh] overflow-y-scroll">
         <div className="flex justify-between mb-[5px]">
-          <h2 className="font-pop font-semibold text-xl text-[#000000]">
-            My Groups
-          </h2>
+          <h2 className="font-pop font-semibold text-xl ">My Groups</h2>
           <BsThreeDotsVertical className="text-[#5F35F5] mt-[5px]" />
         </div>
         {info ? (
           <div>
             <button
               onClick={() => setInfo(false)}
-              className="font-pop font-semibold mr-1 text-sm w-[50px] h-[20px] bg-[#5F35F5] text-[#fff] rounded-[5px]"
+              className="font-pop font-semibold mr-1 text-sm w-[50px] h-[20px] bg-[#5F35F5]  rounded-[5px]"
             >
               Back
             </button>
@@ -243,7 +241,7 @@ const Mygroup = () => {
                   </picture>
 
                   <div className="mt-[10px] pl-[5px]">
-                    <h5 className="font-pop font-semibold text-[14px] leading-[27px] text-[#000000]">
+                    <h5 className="font-pop font-semibold text-[14px] leading-[27px] ">
                       {item.sendername}
                     </h5>
                     {/* <p className="font-pop font-medium text-[12px] leading-[21px] text-[#4D4D4DBF]">
@@ -254,14 +252,14 @@ const Mygroup = () => {
                 <div className="mt-8">
                   <button
                     onClick={() => handleJoinAccept(item)}
-                    className="font-pop font-semibold mr-1 text-sm w-[50px] h-[20px] bg-[#5F35F5] text-[#fff] rounded-[5px]"
+                    className="font-pop font-semibold mr-1 text-sm w-[50px] h-[20px] bg-[#5F35F5]  rounded-[5px]"
                   >
                     Accept
                   </button>
 
                   <button
                     onClick={() => handleJoinReject(item)}
-                    className="font-pop font-semibold text-sm w-[80px] h-[20px] bg-red-800 text-[#fff] rounded-[5px]"
+                    className="font-pop font-semibold text-sm w-[80px] h-[20px] bg-red-800  rounded-[5px]"
                   >
                     Reject
                   </button>
@@ -273,7 +271,7 @@ const Mygroup = () => {
           <div>
             <button
               onClick={() => setMemberInfo(false)}
-              className="font-pop font-semibold mr-1 text-sm w-[50px] h-[20px] bg-[#5F35F5] text-[#fff] rounded-[5px]"
+              className="font-pop font-semibold mr-1 text-sm w-[50px] h-[20px] bg-[#5F35F5]  rounded-[5px]"
             >
               Back
             </button>
@@ -287,10 +285,10 @@ const Mygroup = () => {
                     />
                   </picture>
                   <div className="mt-[1px] pl-[5px]">
-                    <h5 className="font-pop font-semibold text-[14px] leading-[27px] text-[#000000]">
+                    <h5 className="font-pop font-semibold text-[14px] leading-[27px] ">
                       {item.sendername}
                     </h5>
-                    <p className="font-pop font-medium text-[12px] leading-[21px] text-[#4D4D4DBF]">
+                    <p className="font-pop font-medium text-[12px] leading-[21px] ">
                       {item.gtagline}
                     </p>
                   </div>
@@ -298,7 +296,7 @@ const Mygroup = () => {
                 <div className="mt-8">
                   <button
                     onClick={() => handleMemberRemove(item)}
-                    className="font-pop font-semibold text-sm w-[80px] h-[20px] bg-red-800 text-[#fff] rounded-[5px]"
+                    className="font-pop font-semibold text-sm w-[80px] h-[20px] bg-red-800  rounded-[5px]"
                   >
                     Remove
                   </button>
@@ -320,16 +318,16 @@ const Mygroup = () => {
                   <div className="  absolute top-0 hidden ease-in   group-hover:flex left-0 rounded-full w-[52px] h-[52px] bg-red-400 flex justify-center items-center ">
                     <AiOutlineCloudUpload
                       onClick={() => handleGroupPic(item)}
-                      className="text-2xl text-white cursor-pointer"
+                      className="text-2xl cursor-pointer"
                     />
                   </div>
                 </div>
 
                 <div className="mt-[1px] pl-[5px]">
-                  <h5 className="font-pop font-semibold text-[14px] leading-[27px] text-[#000000]">
+                  <h5 className="font-pop font-semibold text-[14px] leading-[27px] ">
                     {item.gname}
                   </h5>
-                  <p className="font-pop font-medium text-[12px] leading-[21px] text-[#4D4D4DBF]">
+                  <p className="font-pop font-medium text-[12px] leading-[21px] ">
                     {item.tagline}
                   </p>
                 </div>
@@ -337,14 +335,14 @@ const Mygroup = () => {
               <div className="mt-8">
                 <button
                   onClick={() => handleGroupJoin(item)}
-                  className="font-pop font-semibold mr-1 text-sm w-[50px] h-[20px] bg-[#5F35F5] text-[#fff] rounded-[5px]"
+                  className="font-pop font-semibold mr-1 text-sm w-[50px] h-[20px] bg-[#5F35F5]  rounded-[5px]"
                 >
                   Info
                 </button>
 
                 <button
                   onClick={() => handleMember(item)}
-                  className="font-pop font-semibold text-sm w-[80px] h-[20px] bg-[#5F35F5] text-[#fff] rounded-[5px]"
+                  className="font-pop font-semibold text-sm w-[80px] h-[20px] bg-[#5F35F5]  rounded-[5px]"
                 >
                   Members
                 </button>
@@ -372,12 +370,12 @@ const Mygroup = () => {
               </picture>
             )}
           </div>
-          <h3 className="py-4 font-nunito font-semibold text-4xl text-[#FFFFFF] ">
+          <h3 className="py-4 font-nunito font-semibold text-4xl ">
             Change Group Profile Picture
           </h3>
           <div className="mb-10 flex flex-col">
             <input
-              className="mb-5 border border-[#03014C] rounded-lg outline-0 w-[368px] px-5 py-5 font-nunito font-semibold text-xl text-[#11175D] "
+              className="mb-5 border border-[#03014C] rounded-lg outline-0 w-[368px] px-5 py-5 font-nunito font-semibold text-xl  "
               type="file"
               onChange={handleImageUpload}
             />
@@ -424,7 +422,7 @@ const Mygroup = () => {
             ) : (
               <button
                 onClick={getCropData}
-                className="border border-[#11175D] bg-[#5F35F5] rounded-lg w-[368px] px-12 py-4 font-nunito font-semibold text-xl text-[#FFFFFF] "
+                className="border border-[#11175D] bg-[#5F35F5] rounded-lg w-[368px] px-12 py-4 font-nunito font-semibold text-xl  "
                 type="button"
               >
                 Upload
@@ -432,7 +430,7 @@ const Mygroup = () => {
             )}
 
             <button
-              className="text-4xl text-[#FFFFFF] absolute top-[50px] right-[100px]  "
+              className="text-4xl  absolute top-[50px] right-[100px]  "
               type="button"
               onClick={handleImagepageCancel}
             >

@@ -52,12 +52,10 @@ const Friendrequest = () => {
       });
   };
   return (
-    <div className="mt-[30px] ml-[43px]">
+    <div className="mt-[30px] xl:ml-[43px]">
       <div className="w-full  h-[40vh] overflow-y-scroll shadow-2xl border rounded-[20px] py-[20px] px-[20px]">
         <div className="flex justify-between mb-[17px]">
-          <h2 className="font-pop font-semibold text-xl text-[#000000]">
-            Friend Request
-          </h2>
+          <h2 className="font-pop font-semibold text-xl ">Friend Request</h2>
           <BsThreeDotsVertical className="text-[#5F35F5] mt-[5px]" />
         </div>
         {friendReq.map((item) => (
@@ -69,11 +67,11 @@ const Friendrequest = () => {
                   src="images/pic.png"
                 />
               </picture>
-              <div className="mt-[12px] pl-[14px]">
-                <h5 className="font-pop font-semibold text-[18px] leading-[27px] text-[#000000]">
+              <div className="xl:mt-[12px] pl-[14px]">
+                <h5 className="font-pop font-semibold text-[18px] leading-[27px]">
                   {item.senderName}
                 </h5>
-                <p className="font-pop font-medium text-[14px] leading-[21px] text-[#4D4D4DBF]">
+                <p className="font-pop font-medium text-[14px] leading-[21px] ">
                   Dinner?
                 </p>
               </div>
@@ -81,7 +79,7 @@ const Friendrequest = () => {
 
             <button
               onClick={() => handleReqAccept(item)}
-              className="font-pop font-semibold text-xl w-[87px] h-[30px] bg-[#5F35F5] text-[#fff] mt-[20px] rounded-[5px] mr-[12px]"
+              className="font-pop font-semibold text-xl w-[87px] h-[30px] bg-[#5F35F5]  mt-[20px] rounded-[5px] mr-[12px]"
             >
               Accept
             </button>

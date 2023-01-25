@@ -305,12 +305,12 @@ const Chat = () => {
             />
           </picture>
           <div className="mt-[12px] pl-[14px]">
-            <h5 className="font-pop font-semibold text-[18px] leading-[27px] text-[#000000]">
+            <h5 className="font-pop font-semibold text-[18px] leading-[27px] ">
               {data ? data.name : "Select a group or friends"}
             </h5>
 
             {data && userOnline == "" ? (
-              <p className="font-pop font-medium text-[14px] leading-[21px] text-[#4D4D4DBF]">
+              <p className="font-pop font-medium text-[14px] leading-[21px] ">
                 Ofline
               </p>
             ) : (
@@ -702,18 +702,18 @@ const Chat = () => {
 
       <div className="mt-8 mb-6 flex  ">
         {reply && (
-          <div className="w-[60%] font-pop font-normal text-[12px] text-[#ad9e9edd] absolute bottom-[68px] left-[30px]">
-            <p className="text-black">{`You Replaying To ${replySendername}`}</p>
+          <div className="w-[60%] font-pop font-normal text-[12px]  absolute bottom-[68px] left-[30px]">
+            <p>{`You Replaying To ${replySendername}`}</p>
             <p className="overflow-x-auto">{reply}</p>
             <ImCross
               onClick={() => setReply("")}
-              className="text-black absolute bottom-[18px] right-0"
+              className=" absolute bottom-[18px] right-0"
             />
           </div>
         )}
         <input
           onChange={handleMsgField}
-          className=" w-[70%] font-pop font-normal p-3 text-sm capitalize bg-[#F1F1F1] rounded-[10px] "
+          className=" w-[70%] font-pop font-normal p-3 text-sm capitalize  rounded-[10px] "
           placeholder="msg"
           value={msg}
         />

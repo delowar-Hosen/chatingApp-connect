@@ -99,7 +99,7 @@ const Registration = () => {
                   setLoader(false);
                   setSuccess("");
                   setSuccess(
-                    "Registration  successfully ! Please login to continue"
+                    "Registration  successfully ! Please Verify Email to continue"
                   );
                 })
                 .then(() => {
@@ -107,6 +107,7 @@ const Registration = () => {
                     name: user.user.displayName,
                     email: user.user.email,
                     photoURL: user.user.photoURL,
+                    id: user.user.uid,
                   });
                 })
                 .then(() => {
@@ -128,24 +129,25 @@ const Registration = () => {
           console.log(errorCode);
           if (errorCode.includes("auth/email-already-in-use")) {
             setSuccess("Email is already use ! try another");
+            setLoader(false);
           }
         });
     }
   };
 
   return (
-    <div className="flex">
-      <div className="w-2/4 mt-1">
-        <h1 className="font-nunito font-bold text-[34px] text-[#11175D] flex justify-end mr-[69px]">
+    <div className=" p-5 xl:p-0 xl:flex">
+      <div className="w-full text-center xl:w-2/4 mt-1">
+        <h1 className="font-nunito font-bold  text-xl xl:text-[34px] text-[#11175D] flex justify-center xl:justify-end xl:mr-[69px]">
           Get started with easily register
         </h1>
-        <p className="font-nunito font-normal text-xl text-[#C3C5D7] flex justify-end mr-[263px] ">
+        <p className="font-nunito font-normal text-base xl:text-xl text-[#C3C5D7] flex justify-center xl:justify-end xl:mr-[263px] ">
           Free register and you can enjoy it
         </p>
-        <div className="mt-12 flex justify-end mr-[193px] flex-wrap">
+        <div className="mt-12 xl:flex justify-center xl:justify-end xl:mr-[193px] flex-wrap">
           <div className="relative mb-10">
             <input
-              className="border border-[#11175D] rounded-lg w-[368px] px-12 py-5 font-nunito font-semibold text-xl text-[#11175D] "
+              className="border border-[#11175D] rounded-lg w-full xl:w-[368px] px-12 py-5 font-nunito font-semibold text-xl text-[#11175D] "
               type="email"
               onChange={handleEmail}
             />
@@ -160,7 +162,7 @@ const Registration = () => {
           </div>
           <div className="relative mb-10">
             <input
-              className="border border-[#11175D] rounded-lg w-[368px] px-12 py-5 font-nunito font-semibold text-xl text-[#11175D] "
+              className="border border-[#11175D] rounded-lg w-full xl:w-[368px] px-12 py-5 font-nunito font-semibold text-xl text-[#11175D] "
               type="text"
               onChange={handleName}
             />
@@ -192,7 +194,7 @@ const Registration = () => {
             ) : (
               <div className="relative mb-1">
                 <input
-                  className="appearance-none border border-[#11175D] rounded-lg w-[368px] px-12 py-5 font-nunito font-semibold text-xl text-[#11175D] "
+                  className="appearance-none border border-[#11175D] rounded-lg w-full xl:w-[368px] px-12 py-5 font-nunito font-semibold text-xl text-[#11175D] "
                   type={show ? "text" : "password"}
                   onChange={handlePassword}
                 />
@@ -232,7 +234,7 @@ const Registration = () => {
             </div>
           ) : (
             <button
-              className="border border-[#11175D] bg-[#5F35F5] rounded-[86px] w-[368px] px-12 py-4 font-nunito font-semibold text-xl text-[#FFFFFF] "
+              className="border border-[#11175D] bg-[#5F35F5] rounded-[86px] w-full xl:w-[368px] px-12 py-4 font-nunito font-semibold text-xl text-[#FFFFFF] "
               type="button"
               onClick={handleSubmit}
             >
@@ -240,7 +242,7 @@ const Registration = () => {
             </button>
           )}
 
-          <div className="w-[368px] text-center mt-6">
+          <div className="w-full xl:w-[368px] text-center mt-6">
             <p className="font-nunito font-semibold text-[13px] text-[#11175D]">
               Already have an account ?
               <Link className="text-[#EA6C00]" to="/login">
@@ -251,7 +253,7 @@ const Registration = () => {
           </div>
         </div>
       </div>
-      <div className="w-2/4">
+      <div className="hidden xl:block w-2/4">
         <picture>
           <img
             className="h-screen w-full object-cover"
