@@ -47,7 +47,7 @@ const Friendrequest = () => {
           sendername: auth.currentUser.displayName,
           reciverid: item.senderId,
           recivername: item.senderName,
-          state: "Accept Friend request",
+          state: `${auth.currentUser.displayName} send you a friend request`,
         });
       });
   };

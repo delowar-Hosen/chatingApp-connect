@@ -58,7 +58,7 @@ const Blockuser = () => {
       sendername: auth.currentUser.displayName,
       reciverid: item.block,
       recivername: item.blockname,
-      state: "Unblock",
+      state: `${item.blockname} unblock you from his friends block list `,
     });
   };
   return (

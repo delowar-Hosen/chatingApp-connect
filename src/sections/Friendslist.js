@@ -75,7 +75,7 @@ const Friendslist = (props) => {
             reciverid: item.senderid,
             senderid: item.reciverid,
             sendername: item.recivername,
-            state: "block",
+            state: `${item.sendername} block you from his friendlist`,
           });
         });
     }

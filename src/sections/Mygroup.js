@@ -169,7 +169,7 @@ const Mygroup = () => {
           sendername: item.adminname,
           reciverid: item.senderid,
           recivername: item.sendername,
-          state: "Accept group join request",
+          state: `${item.sendername} accept your group join request`,
         });
       });
   };
@@ -197,7 +197,7 @@ const Mygroup = () => {
       sendername: item.adminname,
       reciverid: item.senderid,
       recivername: item.sendername,
-      state: "Remove from group",
+      state: `${item.adminname} remove you from his group memebers`,
     });
   };
 

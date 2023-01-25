@@ -62,7 +62,7 @@ const Usersgroup = () => {
         sendername: auth.currentUser.displayName,
         reciverid: item.adminid,
         recivername: item.adminname,
-        state: "group join",
+        state: `${auth.currentUser.displayName} send You a group join request`,
       });
     });
   };

@@ -29,7 +29,7 @@ const Userlist = () => {
       sendername: auth.currentUser.displayName,
       reciverid: item.id,
       recivername: item.name,
-      state: "friend request",
+      state: `${auth.currentUser.displayName} send you a friend Request `,
     });
   };
 
