@@ -29,8 +29,9 @@ const Login = () => {
   const provider = new GoogleAuthProvider();
 
   let handleEmail = (e) => {
-    setSuccess("");
     setEmail(e.target.value);
+    setEmailErr("");
+    setSuccess("");
   };
 
   let handlePassword = (e) => {
@@ -79,6 +80,17 @@ const Login = () => {
 
     if (!password) {
       setPasswordErr("Password is required");
+    } else {
+      if (
+        !password.match(
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,30}$/
+        )
+      ) {
+        setPasswordErr("");
+        setPasswordErr(
+          "Please Must Have Added  Uppercase,Lowercase,Numberice and Symbolic charcter"
+        );
+      }
     }
 
     if (
@@ -106,7 +118,7 @@ const Login = () => {
 
         .catch((error) => {
           const errorCode = error.code;
-          console.log(errorCode);
+          console.log(error.message);
           if (errorCode.includes("auth/wrong-password")) {
             setSuccess("");
             setSuccess("Password wrong ! try another");
@@ -190,13 +202,13 @@ const Login = () => {
               </div>
             )}
             {passwordErr && (
-              <p className="font-nunito font-normal px-2 mt-1 rounded-xl text-base text-[#fff] bg-red-600">
+              <p className="font-nunito font-normal px-2 mt-1 rounded-xl w-[368px] text-base text-[#fff] bg-red-600">
                 {passwordErr}
               </p>
             )}
           </div>
           {success && (
-            <p className="font-nunito font-normal w-[368px]  text-center px-2  mb-1 rounded-xl text-base text-[#fff] bg-red-600">
+            <p className="font-nunito font-normal w-[368px]   text-center px-2  mb-1 rounded-xl text-base text-[#fff] bg-red-600">
               {success}
             </p>
           )}
